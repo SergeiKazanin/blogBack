@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const router = require("./router/index");
+const errorMiddleware = require("./middlewares/error-middleware");
 
 mongoose
   .connect(process.env.DB_URL)
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 app.use("/", router);
+app.use(errorMiddleware);
 
 app.listen(process.env.PORT, (error) => {
   if (error) {
