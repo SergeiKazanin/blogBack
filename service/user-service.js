@@ -14,7 +14,6 @@ class UserService {
         `Пользователь с почтовым адресом ${email} уже существует`
       );
     }
-
     const salt = await bcrypt.genSalt(10);
     const Hash = await bcrypt.hash(password, salt);
     const activationLink = uuid.v4();
@@ -36,6 +35,7 @@ class UserService {
       user: userDto,
     };
   }
+
   async activate(activationLink) {
     const user = await userSchema.findOne({ activationLink });
     if (!user) {
@@ -44,6 +44,7 @@ class UserService {
     user.isActivated = true;
     await user.save();
   }
+
   async login(email, password) {
     const user = await userSchema.findOne({ email });
     if (!user) {
@@ -65,6 +66,25 @@ class UserService {
   async logout(refreshToken) {
     const token = tokenService.removeToken(refreshToken);
     return token;
+  }
+
+  async refresh(refreshToken) {
+    if (!refreshToken) {
+      throw ApiError.UnauthorizedError();
+    }
+    const userData = tokenService.validateRefreshToken(refreshToken);
+    const tokenFromDb = await tokenService.findToken();
+    if (!userData || !tokenFromDb) {
+      throw ApiError.UnauthorizedError();
+    }
+    const user = await userSchema.findById(userData.id);
+    const userDto = new UserDto(user);
+    const tokens = tokenService.generateToken({ ...userDto });
+    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    return {
+      ...tokens,
+      user: userDto,
+    };
   }
 }
 
