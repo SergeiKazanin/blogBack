@@ -39,6 +39,18 @@ class UserService {
       console.log(error);
     }
   }
+  async activate(activationLink) {
+    try {
+      const user = await userSchema.findOne({ activationLink: activationLink });
+      if (!user) {
+        throw new Error("Неверная ссылка активации");
+      }
+      user.isActivated = true;
+      await user.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async login(email, password) {
     try {
     } catch (error) {}

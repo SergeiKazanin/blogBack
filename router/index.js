@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 router.post("/auth/registration", userController.registration);
 router.post("/auth/login", userController.login);
 router.post("/auth/logout", userController.logout);
-router.post("/auth/activate:link", userController.activate);
-router.post("/auth/refresh", userController.refresh);
+router.get("/auth/activate/:link", userController.activate);
+router.get("/auth/refresh", userController.refresh);
 
 module.exports = router;
