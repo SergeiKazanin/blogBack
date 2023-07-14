@@ -37,7 +37,7 @@ class UserService {
     };
   }
   async activate(activationLink) {
-    const user = await userSchema.findOne({ activationLink: activationLink });
+    const user = await userSchema.findOne({ activationLink });
     if (!user) {
       throw ApiError.BadRequest("Неверная ссылка активации");
     }
@@ -45,8 +45,21 @@ class UserService {
     await user.save();
   }
   async login(email, password) {
-    try {
-    } catch (error) {}
+    const user = await userSchema.findOne({ email });
+    if (!user) {
+      throw ApiError.BadRequest("Пользователь с таким email не найден");
+    }
+    const isPassEquals = await bcrypt.compare(password, user.passwordHash);
+    if (!isPassEquals) {
+      throw ApiError.BadRequest("Неверный логин или пароль");
+    }
+    const userDto = new UserDto(user);
+    const tokens = tokenService.generateToken({ ...userDto });
+    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    return {
+      ...tokens,
+      user: userDto,
+    };
   }
 }
 
