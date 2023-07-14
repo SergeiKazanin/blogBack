@@ -15,7 +15,6 @@ class UserController {
       return res.json(userData);
     } catch (error) {
       console.log(error);
-      return res.json({ error: "error" });
     }
   }
   async login(req, res) {
