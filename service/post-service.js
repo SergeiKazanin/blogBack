@@ -11,6 +11,13 @@ class PostService {
     });
     return post;
   }
+  async getAll() {
+    const post = await postSchema.find();
+    return post;
+  }
+  async getOne() {}
+  async delPost() {}
+  async updatePost() {}
 }
 
 module.exports = new PostService();
