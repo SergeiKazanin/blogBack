@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const userSchema = require("../models/User");
 const uuid = require("uuid");
 const mailService = require("../service/mail-service");
-const tokenService = require("../service/token-servise");
+const tokenService = require("./token-service");
 const UserDto = require("../dtos/user-dto");
 const ApiError = require("../exeptions/api-error");
 class UserService {
@@ -73,7 +73,7 @@ class UserService {
       throw ApiError.UnauthorizedError();
     }
     const userData = tokenService.validateRefreshToken(refreshToken);
-    const tokenFromDb = await tokenService.findToken();
+    const tokenFromDb = await tokenService.findToken(refreshToken);
     if (!userData || !tokenFromDb) {
       throw ApiError.UnauthorizedError();
     }
@@ -85,6 +85,10 @@ class UserService {
       ...tokens,
       user: userDto,
     };
+  }
+  async getAllUsers() {
+    const users = await userSchema.find();
+    return users;
   }
 }
 
