@@ -6,6 +6,7 @@ const mailService = require("../service/mail-service");
 const tokenService = require("./token-service");
 const UserDto = require("../dtos/user-dto");
 const ApiError = require("../exeptions/api-error");
+
 class UserService {
   async registration(email, password, fullName) {
     const findEmail = await userSchema.findOne({ email });

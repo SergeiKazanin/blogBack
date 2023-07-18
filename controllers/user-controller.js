@@ -25,6 +25,10 @@ class UserController {
   }
   async login(req, res, next) {
     try {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        return next(ApiError.BadRequest("Ошибка при валидации", error.array()));
+      }
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
       res.cookie("refreshToken", userData?.refreshToken, {
@@ -71,7 +75,7 @@ class UserController {
   async getUsers(req, res, next) {
     try {
       const users = await userService.getAllUsers();
-      return res.json(users);
+      return res.json(req.user);
     } catch (error) {
       next(error);
     }
