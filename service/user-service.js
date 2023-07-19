@@ -36,7 +36,6 @@ class UserService {
       user: userDto,
     };
   }
-
   async activate(activationLink) {
     const user = await userSchema.findOne({ activationLink });
     if (!user) {
@@ -45,7 +44,6 @@ class UserService {
     user.isActivated = true;
     await user.save();
   }
-
   async login(email, password) {
     const user = await userSchema.findOne({ email });
     if (!user) {
@@ -63,12 +61,10 @@ class UserService {
       user: userDto,
     };
   }
-
   async logout(refreshToken) {
     const token = tokenService.removeToken(refreshToken);
     return token;
   }
-
   async refresh(refreshToken) {
     if (!refreshToken) {
       throw ApiError.UnauthorizedError();

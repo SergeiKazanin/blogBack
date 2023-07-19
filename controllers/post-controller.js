@@ -1,5 +1,5 @@
-const { validationResult } = require("express-validator");
 const postService = require("../service/post-service");
+const ApiError = require("../exeptions/api-error");
 
 class PostController {
   async createPost(req, res, next) {
@@ -18,24 +18,58 @@ class PostController {
       next(error);
     }
   }
-
   async getAll(req, res, next) {
     try {
-      const post = await postService.getAll();
-      res.json(post);
-    } catch (error) {}
+      const posts = await postService.getAll();
+      res.json(posts);
+    } catch (error) {
+      next(error);
+    }
   }
   async getOne(req, res, next) {
     try {
-    } catch (error) {}
+      const id = req.params.id;
+      const post = await postService.getOne(id);
+      if (!post) {
+        return next(ApiError.BadRequest("Пост не найден"));
+      }
+      res.json(post);
+    } catch (error) {
+      next(error);
+    }
   }
   async delPost(req, res, next) {
     try {
-    } catch (error) {}
+      const id = req.params.id;
+      const post = await postService.delPost(id);
+      if (!post) {
+        return next(ApiError.BadRequest("Пост не найден"));
+      }
+      res.json(post);
+    } catch (error) {
+      next(error);
+    }
   }
   async updatePost(req, res, next) {
+    const id = req.params.id;
+    const { title, text, tags, imageUrl } = req.body;
+    const user = req.user;
+    const post = await postService.updatePost(
+      id,
+      title,
+      text,
+      tags,
+      imageUrl,
+      user
+    );
+    if (!post) {
+      return next(ApiError.BadRequest("Пост не найден"));
+    }
+    res.json(post);
     try {
-    } catch (error) {}
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
