@@ -7,7 +7,7 @@ const router = require("./router/index");
 const errorMiddleware = require("./middlewares/error-middleware");
 
 mongoose
-  .connect(process.env.DB_URL)
+  .connect("mongodb://mongodb:27017")
   .then(() => {
     console.log("Db Ok");
   })
