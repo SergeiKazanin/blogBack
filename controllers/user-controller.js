@@ -9,7 +9,7 @@ class UserController {
         password,
         fullName
       );
-      res.cookie("refreshToken", userData?.refreshToken, {
+      res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 10 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
@@ -22,7 +22,7 @@ class UserController {
     try {
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
-      res.cookie("refreshToken", userData?.refreshToken, {
+      res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 10 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
