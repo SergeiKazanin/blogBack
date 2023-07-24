@@ -12,8 +12,8 @@ const loginValid = [
 const postValid = [
   body("title").isLength({ min: 3 }).isString(),
   body("text").isLength({ min: 3 }).isString(),
-  body("tags").isLength({ min: 3 }).optional().isArray(),
-  body("imageUrl").isLength({ min: 3 }).optional().isString(),
+  body("tags").optional().isArray(),
+  body("imageUrl").optional().isString(),
 ];
 
 module.exports = { registerValid, loginValid, postValid };
