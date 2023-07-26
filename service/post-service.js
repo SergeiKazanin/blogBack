@@ -15,6 +15,7 @@ class PostService {
   async getAll() {
     const posts = await postSchema
       .find()
+      .sort({ createdAt: -1 })
       .populate("user", ["email", "fullName"])
       .exec();
     return posts;
