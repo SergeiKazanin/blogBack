@@ -9,6 +9,8 @@ services:
     ports:
       - 3453:3453
     restart: always
+    depends_on:
+      - mongodb
   mongodb:
     image: mongo
     volumes:
