@@ -55,7 +55,7 @@ router.post("/uploads", (req, res) => {
   });
 });
 
-router.get("/uploads/:photoID", async (req, res) => {
+router.get("/uploads/:photoID", (req, res) => {
   try {
     var photoID = new ObjectID(req.params.photoID);
   } catch (err) {
@@ -65,7 +65,7 @@ router.get("/uploads/:photoID", async (req, res) => {
     });
   }
 
-  let bucket = new mongodb.GridFSBucket(db.db, {
+  let bucket = new mongodb.GridFSBucket(db, {
     bucketName: "image",
   });
 
