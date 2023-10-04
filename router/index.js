@@ -55,7 +55,7 @@ router.post("/uploads", (req, res) => {
   });
 });
 
-router.get("/uploads/:photoID", (req, res) => {
+router.get("/uploads/:photoID", async (req, res) => {
   try {
     var photoID = new ObjectID(req.params.photoID);
   } catch (err) {
