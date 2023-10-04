@@ -35,7 +35,7 @@ router.post("/uploads", (req, res) => {
     readablePhotoStream.push(req.file.buffer);
     readablePhotoStream.push(null);
 
-    let bucket = new mongodb.GridFSBucket(db.db, {
+    let bucket = new mongodb.GridFSBucket(db, {
       bucketName: "image",
     });
 
