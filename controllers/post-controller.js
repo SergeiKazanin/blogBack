@@ -52,14 +52,14 @@ class PostController {
   }
   async updatePost(req, res, next) {
     const id = req.params.id;
-    const { title, text, tags, imageUrl } = req.body;
+    const { title, text, tags, imageId } = req.body;
     const user = req.user;
     const post = await postService.updatePost(
       id,
       title,
       text,
       tags,
-      imageUrl,
+      imageId,
       user
     );
     if (!post) {

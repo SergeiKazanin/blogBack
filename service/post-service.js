@@ -35,7 +35,7 @@ class PostService {
     const post = await postSchema.findOneAndDelete({ _id: id });
     return post;
   }
-  async updatePost(id, title, text, tags, imageUrl, user) {
+  async updatePost(id, title, text, tags, imageId, user) {
     const post = await postSchema.updateOne(
       { _id: id },
       {
@@ -43,7 +43,7 @@ class PostService {
         text,
         tags,
         user: user.id,
-        imageUrl,
+        imageId,
       }
     );
     return post;

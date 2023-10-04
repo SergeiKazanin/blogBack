@@ -13,7 +13,7 @@ const postValid = [
   body("title").isLength({ min: 3 }).isString(),
   body("text").isLength({ min: 3 }).isString(),
   body("tags").optional().isArray(),
-  body("imageUrl").optional().isString(),
+  body("imageId").optional().isString(),
 ];
 
 module.exports = { registerValid, loginValid, postValid };
