@@ -4,13 +4,13 @@ const ApiError = require("../exeptions/api-error");
 class PostController {
   async createPost(req, res, next) {
     try {
-      const { title, text, tags, imageUrl } = req.body;
+      const { title, text, tags, imageId } = req.body;
       const user = req.user;
       const post = await postService.createPost(
         title,
         text,
         tags,
-        imageUrl,
+        imageId,
         user
       );
       res.json(post);

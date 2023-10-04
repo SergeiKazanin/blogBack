@@ -2,13 +2,13 @@ const postSchema = require("../models/Post");
 const ApiError = require("../exeptions/api-error");
 
 class PostService {
-  async createPost(title, text, tags, imageUrl, user) {
+  async createPost(title, text, tags, imageId, user) {
     const post = await postSchema.create({
       title,
       text,
       tags,
       user: user.id,
-      imageUrl,
+      imageId,
     });
     return post;
   }
