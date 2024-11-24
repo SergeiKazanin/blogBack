@@ -20,11 +20,11 @@ const app = express();
 app.use(express.json());
 //app.use("/uploads", express.static("uploads"));
 app.use(
-  // cors({
-  //   credentials: true,
-  //   origin: process.env.CLIENT_URL,
-  // }) 
-  cors({credentials: true})
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+  }) 
+ //cors({credentials: true})
 );
 app.use(cookieParser());
 app.use("/", router);
